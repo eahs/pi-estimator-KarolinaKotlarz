@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace PiEstimator
 {
@@ -27,6 +28,25 @@ namespace PiEstimator
 
             // TODO: Calculate Pi
 
+            PointD point;
+            double radius;
+            double ratio = 0;
+            double hits = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                point = new PointD(rand.NextDouble(), rand.NextDouble());
+                radius = point.GetRadius();
+
+                if (radius < 1)
+                {
+                    hits++;
+                }
+            }
+            
+            ratio = hits / n;
+            pi = ratio * 4;
+            
             return pi;
         }
 
@@ -44,6 +64,26 @@ namespace PiEstimator
                     return output;
                 }
             }
+        }
+    }
+
+    struct PointD
+    {
+        public double x;
+        public double y;
+
+        public PointD(double x, double y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
+        public double GetRadius()
+        {
+            double xPow = x * x;
+            double yPow = y * y;
+
+            return Math.Sqrt(xPow + yPow);
         }
     }
 }
